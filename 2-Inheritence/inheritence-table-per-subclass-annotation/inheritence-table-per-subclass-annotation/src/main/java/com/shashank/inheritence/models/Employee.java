@@ -3,14 +3,13 @@ package com.shashank.inheritence.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Employee_table")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="Emp_Type",discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue(value="Employee")
+@Table(name="Employee_table3")
+@Inheritance(strategy=InheritanceType.JOINED)  
 public class Employee {
 
 	@Id
 	@Column(name="emp_id")
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
 	
 	@Column(name="emp_name")
