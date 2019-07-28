@@ -31,15 +31,13 @@ public class App
     	
     	System.out.println("----------------------partial objects-------------------------");
     	
-    	//refer https://www.java4s.com/hibernate/part-4-hibernate-query-language-using-hql-select-query/
-    	//for some unkown reason below seems to works
     	Query query2 = session.createQuery("select p.id,p.name from Product p");
     	List list2 = query2.list();
-    	Iterator iterator2 = list.iterator();
+    	Iterator iterator2 = list2.iterator();
     	while(iterator2.hasNext()){
     		Object obj = iterator2.next();
-    		Product arr = (Product) obj;
-    		System.out.println("id is "+arr.getId());
+    		Object[] arr = (Object[]) obj;
+    		System.out.println("id is "+arr[0]);
     	}
     	
     	session.close();
