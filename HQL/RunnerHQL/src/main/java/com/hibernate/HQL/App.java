@@ -16,36 +16,45 @@ import com.hibernate.HQL.model.Product;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-    	
-    	SessionFactory sessionFactory = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory();
-    	Session session = sessionFactory.openSession();
-    	Query query = session.createQuery("select p from Product p");
-    	List list = query.list();
-    	Iterator iterator = list.iterator();
-    	while(iterator.hasNext()){
-    		Product p=(Product) iterator.next();
-    		System.out.println("----------name of product is --------------"+p.getName());
-    	}
-    	
-    	System.out.println("----------------------partial objects-------------------------");
-    	
-    	Query query2 = session.createQuery("select p.id,p.name from Product p");
-    	List list2 = query2.list();
-    	Iterator iterator2 = list2.iterator();
-    	while(iterator2.hasNext()){
-    		Object obj = iterator2.next();
-    		Object[] arr = (Object[]) obj;
-    		System.out.println("id is "+arr[0]);
-    	}
-    	
-    	Query query3 = session.createQuery("delete from Product p where p.id=:pid");
-    	query3.setParameter("pid", new Integer(1));
-    	int no_of_record_deleted = query3.executeUpdate();
-    	System.out.println("----------------pk deleted ----------"+no_of_record_deleted);
-    	
-    	session.close();
-    	sessionFactory.close();
-    }
+	public static void main( String[] args )
+	{
+
+		SessionFactory sessionFactory = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("select p from Product p");
+		List list = query.list();
+		Iterator iterator = list.iterator();
+		while(iterator.hasNext()){
+			Product p=(Product) iterator.next();
+			System.out.println("----------name of product is --------------"+p.getName());
+		}
+
+		System.out.println("----------------------partial objects-------------------------");
+
+		Query query2 = session.createQuery("select p.id,p.name from Product p");
+		List list2 = query2.list();
+		Iterator iterator2 = list2.iterator();
+		while(iterator2.hasNext()){
+			Object obj = iterator2.next();
+			Object[] arr = (Object[]) obj;
+			System.out.println("id is "+arr[0]);
+		}
+
+		session.flush();
+		session.close();
+		sessionFactory.close();
+		
+		Query query3 = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory().openSession().createQuery("delete from Product p where p.id=:pid");
+		query3.setParameter("pid", new Integer(1));
+		int no_of_record_deleted = query3.executeUpdate();
+		System.out.println("----------------pk deleted ----------"+no_of_record_deleted);
+
+
+		Query qry = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory().openSession().createQuery("update Product p set p.name=? where p.id=2");
+		qry.setParameter(0,"updated..");
+		int res = qry.executeUpdate();
+
+		//todo hql insert
+		
+	}
 }
