@@ -40,21 +40,23 @@ public class App
 			System.out.println("id is "+arr[0]);
 		}
 
+		session.beginTransaction();
+		
+		Query query3 = session.createQuery("delete from Product p where p.id=:pid");
+		query3.setParameter("pid", new Integer(3));
+		int no_of_record_deleted = query3.executeUpdate();
+		System.out.println("----------------pk deleted ----------"+no_of_record_deleted);
+		session.getTransaction().commit();
+
+		session.beginTransaction();
+		Query qry = session.createQuery("update Product p set p.name=? where p.id=4");
+		qry.setParameter(0,"updated..");
+		int res = qry.executeUpdate();
+		session.getTransaction().commit();
+
 		session.flush();
 		session.close();
 		sessionFactory.close();
-		
-		Query query3 = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory().openSession().createQuery("delete from Product p where p.id=:pid");
-		query3.setParameter("pid", new Integer(1));
-		int no_of_record_deleted = query3.executeUpdate();
-		System.out.println("----------------pk deleted ----------"+no_of_record_deleted);
-
-
-		Query qry = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory().openSession().createQuery("update Product p set p.name=? where p.id=2");
-		qry.setParameter(0,"updated..");
-		int res = qry.executeUpdate();
-
-		//todo hql insert
 		
 	}
 }
