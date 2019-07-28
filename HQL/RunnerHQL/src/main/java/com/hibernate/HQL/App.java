@@ -40,6 +40,11 @@ public class App
     		System.out.println("id is "+arr[0]);
     	}
     	
+    	Query query3 = session.createQuery("delete from Product p where p.id=:pid");
+    	query3.setParameter("pid", new Integer(1));
+    	int no_of_record_deleted = query3.executeUpdate();
+    	System.out.println("----------------pk deleted ----------"+no_of_record_deleted);
+    	
     	session.close();
     	sessionFactory.close();
     }
