@@ -43,6 +43,7 @@ public class App
 		s3.beginTransaction();
 		Product objToBeUpdated = (Product) s3.load(Product.class, 3);
 		objToBeUpdated.setName("paper");
+		s3.saveOrUpdate(objToBeUpdated);
 		s3.getTransaction().commit();
 		s3.close();
 	}

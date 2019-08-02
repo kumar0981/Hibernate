@@ -53,6 +53,8 @@ public class App
 		qry.setParameter(0,"updated..");
 		int res = qry.executeUpdate();
 		session.getTransaction().commit();
+		
+		//todo insert // must see mkyong insert
 
 		session.flush();
 		session.close();
